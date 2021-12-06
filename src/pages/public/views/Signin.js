@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
+
+import { toast } from "react-toastify";
 
 import LogoCard from "../components/LogoCard";
 import SigninCard from "../components/SigninCard";
+import Spinner from "../../../helper/Spinner";
+
+import SigninFunc from "../functions/SigninFunc";
 
 const Signin = () => {
+  const [loader, setLoader] = useState(false);
+
   const initialFormValues = {
     username: "",
     secret: "",
@@ -19,13 +26,31 @@ const Signin = () => {
       .required("Necessary,this is how you verify you are a VIP")
       .min(8, "Seriously, do you think this is it?"),
   });
-  const submitForm = (values) => {
+  const submitForm = async (values) => {
+    setLoader(true);
     console.log(values);
+    const body = {
+      email: values.username,
+      password: values.secret,
+    };
+    const { data } = await SigninFunc(body);
+    setLoader(false);
+    if (data.type === "success") {
+      toast.success(`Welcome ${data.payLoad.name}`);
+      //add this token,
+    } else {
+      toast.error(data.msg);
+    }
   };
+
+  if (loader) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <div className="container">
-        <div className="row justify-content-center m-4">
+        <div className="row justify-content-center m-5">
           <LogoCard />
           <SigninCard
             initialFormValues={initialFormValues}

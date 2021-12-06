@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import * as yup from "yup";
+
+import { toast } from "react-toastify";
 
 import LogoCard from "../components/LogoCard";
 import SignupCard from "../components/SignupCard";
+import Spinner from "../../../helper/Spinner";
 
 import SignupFunc from "../functions/SignupFunc";
 
 const Signup = () => {
+  const [loader, setLoader] = useState(false);
+
   const initialFormValues = {
     name: "",
     username: "",
@@ -27,19 +32,33 @@ const Signup = () => {
       .min(8, "Seriously, do you think this is enough?"),
   });
   const submitForm = async (values) => {
+    setLoader(true);
     console.log(values);
     const body = {
       name: values.name,
       email: values.username,
       password: values.secret,
     };
-    const response = await SignupFunc(body);
-    console.log(response);
+    const { data, status } = await SignupFunc(body);
+    setLoader(false);
+    if (status === 200) {
+      toast.success("Registration Successful");
+      console.log(data);
+      //add data.token and data.user to localStorage via custom hook
+    } else {
+      toast.warning(data.msg);
+      console.log(data);
+    }
   };
+
+  if (loader) {
+    return <Spinner />;
+  }
+
   return (
     <>
       <div className="container">
-        <div className="row justify-content-center m-3 ">
+        <div className="row justify-content-center m-5 ">
           <LogoCard />
           <SignupCard
             initialFormValues={initialFormValues}
