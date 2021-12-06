@@ -44,6 +44,8 @@ const Signup = () => {
     if (status === 200) {
       toast.success("Registration Successful");
       console.log(data);
+      //data=>{token,user}
+      //user=>{email,id,name}
       //add data.token and data.user to localStorage via custom hook
     } else {
       toast.warning(data.msg);

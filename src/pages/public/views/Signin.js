@@ -37,6 +37,7 @@ const Signin = () => {
     setLoader(false);
     if (data.type === "success") {
       toast.success(`Welcome ${data.payLoad.name}`);
+      //token,payload=>{email,id,name},idActivated
       //add this token,
     } else {
       toast.error(data.msg);

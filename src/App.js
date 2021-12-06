@@ -2,6 +2,8 @@ import "./App.css";
 
 import { Route, Routes } from "react-router";
 
+import UserProvider from "./context/UserProvider";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,33 +22,38 @@ import Protected from "./components/Protected";
 function App() {
   return (
     <>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<Home />} />
+      <UserProvider>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home />} />
 
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
 
-        <Route path="/resetPassword/:dataString" element={<ResetPassword />} />
-        <Route
-          path="/emailActivation/:activationId"
-          element={<EmailActivation />}
-        />
+          <Route
+            path="/resetPassword/:dataString"
+            element={<ResetPassword />}
+          />
+          <Route
+            path="/emailActivation/:activationId"
+            element={<EmailActivation />}
+          />
 
-        <Route path="*" element={<Home />} />
+          <Route path="*" element={<Home />} />
 
-        <Route
-          path="/dashboard"
-          element={
-            <Protected redirect={<Home />}>
-              <Dashboard />
-            </Protected>
-          }
-        />
-      </Routes>
+          <Route
+            path="/dashboard"
+            element={
+              <Protected redirect={<Home />}>
+                <Dashboard />
+              </Protected>
+            }
+          />
+        </Routes>
 
-      <ToastContainer />
+        <ToastContainer />
+      </UserProvider>
     </>
   );
 }
