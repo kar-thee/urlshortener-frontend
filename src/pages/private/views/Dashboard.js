@@ -8,6 +8,7 @@ import useUser from "../../../hooks/useUser";
 import getAnalysisData from "../functions/getAnalysisData";
 import PageHeader from "../components/PageHeader";
 import MonthlyChart from "../components/MonthlyChart";
+import DailyChart from "../components/DailyChart";
 
 import Spinner from "../../../helper/Spinner";
 
@@ -69,7 +70,7 @@ const Dashboard = () => {
       {chartData && (
         <div className="row  my-5 justify-content-center">
           <MonthlyChart data={chartData} />
-          <MonthlyChart data={chartData} />
+          <DailyChart data={chartData} />
         </div>
       )}
     </div>
