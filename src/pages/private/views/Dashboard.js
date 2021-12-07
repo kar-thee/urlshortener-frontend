@@ -6,15 +6,18 @@ import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
 
 import getAnalysisData from "../functions/getAnalysisData";
+import PageHeader from "../components/PageHeader";
+import MonthlyChart from "../components/MonthlyChart";
 
 import Spinner from "../../../helper/Spinner";
 
 const Dashboard = () => {
   const [loader, setLoader] = useState(false);
+  const [chartData, setChartData] = useState(null);
 
   const navigate = useNavigate();
   const [token] = useAuth();
-  const [{ idActivated }] = useUser();
+  const [{ idActivated, email, name }] = useUser();
 
   useEffect(() => {
     if (!token) {
@@ -26,8 +29,17 @@ const Dashboard = () => {
       setLoader(false);
       if (data.type === "success") {
         toast.success(data.msg);
+        const arr = data.dataArray.map((item) => {
+          return {
+            name: item.urlName,
+            month: parseInt(item.month),
+            day: parseInt(item.day),
+          };
+        });
+        setChartData(arr);
       } else {
         toast.error(data.msg);
+        navigate("/");
       }
     };
     if (idActivated) {
@@ -52,8 +64,14 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
-      <>This is dashboard</>
+    <div className="container-fluid">
+      <PageHeader email={email} name={name} textHeading="DashBoard" />
+      {chartData && (
+        <div className="row  my-5 justify-content-center">
+          <MonthlyChart data={chartData} />
+          <MonthlyChart data={chartData} />
+        </div>
+      )}
     </div>
   );
 };
