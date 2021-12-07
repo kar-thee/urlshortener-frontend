@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as yup from "yup";
+import { useNavigate } from "react-router";
 
 import { toast } from "react-toastify";
 
@@ -9,8 +10,14 @@ import Spinner from "../../../helper/Spinner";
 
 import SignupFunc from "../functions/SignupFunc";
 
+import useAuth from "../../../hooks/useAuth";
+import useUser from "../../../hooks/useUser";
+
 const Signup = () => {
   const [loader, setLoader] = useState(false);
+  const [, updateToken] = useAuth();
+  const [, updateUser] = useUser();
+  const navigate = useNavigate();
 
   const initialFormValues = {
     name: "",
@@ -44,9 +51,9 @@ const Signup = () => {
     if (status === 200) {
       toast.success("Registration Successful");
       console.log(data);
-      //data=>{token,user}
-      //user=>{email,id,name}
-      //add data.token and data.user to localStorage via custom hook
+      updateToken(data.token);
+      updateUser({ ...data.user, idActivated: data.idActivated });
+      navigate("/dashboard");
     } else {
       toast.warning(data.msg);
       console.log(data);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as yup from "yup";
+import { useNavigate } from "react-router";
 
 import { toast } from "react-toastify";
 
@@ -9,8 +10,14 @@ import Spinner from "../../../helper/Spinner";
 
 import SigninFunc from "../functions/SigninFunc";
 
+import useAuth from "../../../hooks/useAuth";
+import useUser from "../../../hooks/useUser";
+
 const Signin = () => {
   const [loader, setLoader] = useState(false);
+  const [, updateToken] = useAuth();
+  const [, updateUser] = useUser();
+  const navigate = useNavigate();
 
   const initialFormValues = {
     username: "",
@@ -37,8 +44,9 @@ const Signin = () => {
     setLoader(false);
     if (data.type === "success") {
       toast.success(`Welcome ${data.payLoad.name}`);
-      //token,payload=>{email,id,name},idActivated
-      //add this token,
+      updateToken(data.token);
+      updateUser({ ...data.payLoad, idActivated: data.idActivated });
+      navigate("/dashboard");
     } else {
       toast.error(data.msg);
     }

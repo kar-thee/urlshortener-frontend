@@ -1,11 +1,9 @@
-import useCustomHook from "../hooks/useCustomHook";
+import useAuth from "../hooks/useAuth";
 
 const Protected = ({ children, redirect }) => {
-  const user = useCustomHook();
-  console.log(user, "user in protected");
-  return 11 > 10 ? children : redirect;
+  const [, , authCheck] = useAuth();
+
+  return authCheck() ? children : redirect;
 };
 
 export default Protected;
-
-//here check whether localStorage has token

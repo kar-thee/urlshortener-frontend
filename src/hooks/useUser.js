@@ -2,10 +2,10 @@ import { useContext } from "react";
 
 import { UserContext } from "../context/UserProvider";
 
-const useCustomHook = () => {
+const useUser = () => {
   const user = useContext(UserContext);
 
-  return user;
+  return [user.userState, user.updateUser];
 };
 
-export default useCustomHook;
+export default useUser;

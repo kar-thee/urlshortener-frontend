@@ -1,24 +1,11 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 
-// const user = createContext(null);
-// const userContext = useContext(user)
+import { UserContext } from "../context/UserProvider";
+
 const useAuth = () => {
-  const [tokenState, setTokenState] = useState(() => {
-    const initalValue = localStorage.getItem("token");
-    return initalValue || null;
-  });
+  const user = useContext(UserContext);
 
-  useEffect(() => {
-    localStorage.setItem("token", tokenState);
-  }, [tokenState]);
-
-  const updateToken = (newValue) => {
-    return setTokenState(newValue);
-  };
-  const authCheck = () => {
-    return tokenState !== null ? true : false;
-  };
-  return [authCheck, tokenState, updateToken];
+  return [user.tokenState, user.updateToken, user.authCheck];
 };
 
 export default useAuth;

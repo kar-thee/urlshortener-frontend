@@ -1,17 +1,25 @@
 import React, { createContext } from "react";
 
-import useAuth from "../hooks/useAuth";
+import useGetValues from "../hooks/useGetValues";
 
 export const UserContext = createContext(null);
 
 const UserProvider = ({ children }) => {
-  const [authCheck, token, updateToken] = useAuth();
+  const [tokenState, updateToken] = useGetValues("token");
+  const [userState, updateUser] = useGetValues("user");
 
-  return (
-    <UserContext.Provider value={(authCheck, token, updateToken)}>
-      {children}
-    </UserContext.Provider>
-  );
+  const authCheck = () => {
+    return (tokenState && userState) !== null ? true : false;
+  };
+
+  const values = {
+    tokenState,
+    updateToken,
+    authCheck,
+    userState,
+    updateUser,
+  };
+  return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };
 
 export default UserProvider;

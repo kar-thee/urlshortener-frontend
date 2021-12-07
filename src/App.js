@@ -15,9 +15,12 @@ import Signup from "./pages/public/views/Signup";
 import ForgotPassword from "./pages/public/views/ForgotPassword";
 import ResetPassword from "./pages/public/views/ResetPassword";
 import EmailActivation from "./pages/public/views/EmailActivation";
-import Dashboard from "./pages/private/views/Dashboard";
 
 import Protected from "./components/Protected";
+
+import Dashboard from "./pages/private/views/Dashboard";
+import CreateShortUrl from "./pages/private/views/CreateShortUrl";
+import TableDisplay from "./pages/private/views/TableDisplay";
 
 function App() {
   return (
@@ -47,6 +50,22 @@ function App() {
             element={
               <Protected redirect={<Home />}>
                 <Dashboard />
+              </Protected>
+            }
+          />
+          <Route
+            path="/createUrlShorts"
+            element={
+              <Protected redirect={<Home />}>
+                <CreateShortUrl />
+              </Protected>
+            }
+          />
+          <Route
+            path="/summary"
+            element={
+              <Protected redirect={<Home />}>
+                <TableDisplay />
               </Protected>
             }
           />
