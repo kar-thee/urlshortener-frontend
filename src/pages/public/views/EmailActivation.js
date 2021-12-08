@@ -3,6 +3,8 @@ import { useParams } from "react-router";
 
 import { toast } from "react-toastify";
 
+import useAuth from "../../../hooks/useAuth";
+
 import LogoCard from "../components/LogoCard";
 import EmailActivationCard from "../components/EmailActivationCard";
 import Spinner from "../../../helper/Spinner";
@@ -13,6 +15,9 @@ const EmailActivation = () => {
   const { activationId } = useParams();
   const [loader, setLoader] = useState(false);
   const [isSuccess, setisSuccess] = useState(null);
+
+  const [, updateToken] = useAuth();
+
   useEffect(() => {
     const emailVerifyFunc = async () => {
       setLoader(true);
@@ -24,12 +29,13 @@ const EmailActivation = () => {
       if (data.type === "success") {
         toast.success(data.msg);
         setisSuccess(true);
+        updateToken(null);
       } else {
         toast.error(data.msg);
       }
     };
     emailVerifyFunc();
-  }, [activationId]);
+  }, [activationId, updateToken]);
 
   if (loader) {
     return <Spinner />;

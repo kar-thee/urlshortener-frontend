@@ -6,7 +6,7 @@ const TableCard = ({ urlData }) => {
       <div className="container p-4">
         <div className="row">
           <div className="col">
-            <table class="table table-striped">
+            <table className="table table-striped">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -21,9 +21,18 @@ const TableCard = ({ urlData }) => {
                   <tr key={item._id}>
                     <th scope="row">{index + 1}</th>
                     <td>{item.originalUrl}</td>
-                    <td>{item.shortUrlId}</td>
+                    <td>
+                      https://karthee-urlshortsapp-000001.herokuapp.com/
+                      {item.shortUrlId}
+                    </td>
                     <td>{new Date(item.createdAt).toLocaleDateString()}</td>
-                    <td className={item.hitCount === 0 ? "text-danger" : ""}>
+                    <td
+                      className={
+                        item.hitCount === 0
+                          ? " text-center text-danger"
+                          : " text-center text-success"
+                      }
+                    >
                       {item.hitCount}
                     </td>
                   </tr>

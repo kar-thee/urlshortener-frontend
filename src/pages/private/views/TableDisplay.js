@@ -16,7 +16,7 @@ const TableDisplay = () => {
   const navigate = useNavigate();
   const [urlData, seturlData] = useState(null);
   const [loader, setLoader] = useState(false);
-  const [token] = useAuth();
+  const [token, updateToken] = useAuth();
   const [{ idActivated, email, name }] = useUser();
 
   useEffect(() => {
@@ -34,6 +34,7 @@ const TableDisplay = () => {
       } else {
         toast.error(data.msg);
         navigate("/");
+        updateToken(null);
       }
     };
     if (idActivated) {
@@ -41,7 +42,7 @@ const TableDisplay = () => {
     } else {
       navigate("/dashboard");
     }
-  }, [idActivated, navigate, token]);
+  }, [idActivated, navigate, token, updateToken]);
 
   if (loader) {
     return <Spinner />;

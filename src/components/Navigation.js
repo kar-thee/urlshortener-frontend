@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 import { Link, NavLink } from "react-router-dom";
+
+import useAuth from "../hooks/useAuth";
 
 const publicNavigationLinks = [
   { linkName: "Signin", linkTo: "/signin" },
@@ -8,7 +11,16 @@ const publicNavigationLinks = [
   { linkName: "ForgotPassword", linkTo: "/ForgotPassword" },
 ];
 
+const protectedNavLinks = [
+  { linkName: "Dashboard", linkTo: "/dashboard" },
+  { linkName: "CreateShortUrl", linkTo: "/createUrlShorts" },
+  { linkName: "Summary", linkTo: "/summary" },
+];
+
 const Navigation = () => {
+  const [, updateToken, authCheck] = useAuth();
+
+  const navigate = useNavigate();
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light shadow-sm">
@@ -32,19 +44,48 @@ const Navigation = () => {
             id="navbarNavAltMarkup"
           >
             <div className="navbar-nav">
-              {publicNavigationLinks.map(({ linkName, linkTo }) => {
-                return (
-                  <NavLink
-                    key={linkName}
-                    className={(nav) =>
-                      nav.isActive ? "active nav-link text-primary" : "nav-link"
-                    }
-                    to={linkTo}
-                  >
-                    {linkName}
-                  </NavLink>
-                );
-              })}
+              {authCheck()
+                ? protectedNavLinks.map(({ linkName, linkTo }) => {
+                    return (
+                      <NavLink
+                        key={linkName}
+                        className={(nav) =>
+                          nav.isActive
+                            ? "active nav-link text-primary"
+                            : "nav-link"
+                        }
+                        to={linkTo}
+                      >
+                        {linkName}
+                      </NavLink>
+                    );
+                  })
+                : publicNavigationLinks.map(({ linkName, linkTo }) => {
+                    return (
+                      <NavLink
+                        key={linkName}
+                        className={(nav) =>
+                          nav.isActive
+                            ? "active nav-link text-primary"
+                            : "nav-link"
+                        }
+                        to={linkTo}
+                      >
+                        {linkName}
+                      </NavLink>
+                    );
+                  })}
+              {authCheck() && (
+                <button
+                  className="rounded btn btn-outline-danger mx-3"
+                  onClick={() => {
+                    updateToken(null);
+                    navigate("/signin");
+                  }}
+                >
+                  Logout
+                </button>
+              )}
             </div>
           </div>
         </div>

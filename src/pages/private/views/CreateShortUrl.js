@@ -20,7 +20,7 @@ const CreateShortUrl = () => {
   const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
-  const [token] = useAuth();
+  const [token, updateToken] = useAuth();
   const [{ idActivated, email, name }] = useUser();
 
   useEffect(() => {
@@ -44,6 +44,8 @@ const CreateShortUrl = () => {
       navigate("/summary");
     } else {
       toast.error(data.msg);
+      navigate("/");
+      updateToken(null);
     }
   };
   const yupValidation = yup.object().shape({

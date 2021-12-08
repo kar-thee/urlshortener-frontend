@@ -17,7 +17,7 @@ const Dashboard = () => {
   const [chartData, setChartData] = useState(null);
 
   const navigate = useNavigate();
-  const [token] = useAuth();
+  const [token, updateToken] = useAuth();
   const [{ idActivated, email, name }] = useUser();
 
   useEffect(() => {
@@ -41,12 +41,13 @@ const Dashboard = () => {
       } else {
         toast.error(data.msg);
         navigate("/");
+        updateToken(null);
       }
     };
     if (idActivated) {
       getAllData();
     }
-  }, [idActivated, navigate, token]);
+  }, [idActivated, navigate, token, updateToken]);
 
   if (!idActivated) {
     return (

@@ -15,11 +15,11 @@ const ResetPassword = () => {
 
   const { dataString } = useParams();
 
-  const resetParamsFunc = async () => {
+  const resetParamsFunc = () => {
     const dataArray = dataString.split("iHaveAmnesia");
     const resetCode = dataArray[0];
     const authToken = dataArray[1];
-
+    console.log(dataArray, " dataArray");
     return { resetCode, authToken };
   };
 
@@ -43,7 +43,7 @@ const ResetPassword = () => {
   const submitForm = async (values) => {
     setLoader(true);
     const { resetCode, authToken } = resetParamsFunc();
-    console.log(values);
+    console.log(values, resetCode, authToken);
     const body = {
       newPassword: values.confirmSecret,
       resetCode,
