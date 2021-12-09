@@ -1,7 +1,7 @@
 # zen-assignment-urlshortener-frontend
 <br>
 Task : Develop a URL shortening web Application with Frontend and backend.
-<br>
+<br><br>
 Account credentials for accessing App (especially chart in Dashboard):  
 <br>
 email: testAccount@gmail.com<br>
