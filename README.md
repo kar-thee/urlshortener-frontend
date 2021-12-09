@@ -22,3 +22,8 @@ Site Features :
 <li>Chart - recharts</li><br>
 </ul>
 <br>
+<br>
+Account credentials for Testing App (especially chart in Dashboard):  
+<br>
+email: testAccount@gmail.com<br>
+password:password<br>
