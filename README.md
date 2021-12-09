@@ -2,6 +2,10 @@
 <br>
 Task : Develop a URL shortening web Application with Frontend and backend.
 <br>
+Account credentials for accessing App (especially chart in Dashboard):  
+<br>
+email: testAccount@gmail.com<br>
+password:password<br>
 <br>
 <strong>Demo : https://karthee-urlshortsapp.netlify.app/</strong>
 <br>
@@ -23,7 +27,4 @@ Site Features :
 </ul>
 <br>
 <br>
-Account credentials for Testing App (especially chart in Dashboard):  
-<br>
-email: testAccount@gmail.com<br>
-password:password<br>
+
